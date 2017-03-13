@@ -1,0 +1,31 @@
+---
+languages: [es]
+method: post
+id: frm_seleccion_empresa_abono_cuenta
+elements:
+  - type: Fieldset
+    name: contenedor
+    legend:
+    attributes:
+      class: principal
+    elements:      
+      - type: Select
+        name: empresa
+        id: empresa
+        label: Seleccione la Empresa proveedora del servicio
+        options:           
+          - [ 1, ABS ]   
+          - [ 2, TODOTICKET ]
+          - [ 3, CESTATICKET ]
+        empty_first: 1
+        empty_first_label: --Seleccione la Empresa proveedora del servicio--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar la Empresa proveedora del servicio"
+      - type: Submit
+        name: submit
+        id: submit  
+        attributes:
+          class: botones
+        value: ACEPTAR
+          

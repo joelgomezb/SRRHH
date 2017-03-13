@@ -1,0 +1,115 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET navbar = 'caja' %]
+[% js_local = BLOCK %]
+$(document).ready(function(){
+  
+  $('#enlace_imprimir').click( function() {
+    if ( confirm("¿Desea imprimir la solicitud?") ) {
+      window.print();
+      //window.close();
+    }
+  });
+  
+});
+[% END %]
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Constancias de Trabajo</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li class="active">Administración</li>
+	<li class="active">Aportes</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<h2 class="soloimpresion" align="center"> OFICINA DE RECURSOS HUMANOS </h2>
+
+<h2 align="center">Listado del Resumen de Caja de Ahorro</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir" class="ocultar-impresion btn btn-primary" href="#"><i class="fa fa-print"></i>&nbsp;Imprimir</a>   
+</div>
+
+[% IF datos %]
+<div class="contenedor">
+  <table class="tablaencabezado imprimirborde table table-hover" >
+    <tr>
+      <td class="nombrecampo" width="10%" align="rigth">Año: [% datos.anio %]</td>     
+      <td class="nombrecampo" width="20%" align="rigth">Tipo de Personal: [% datos.tipopersonal %]</td>            
+    </tr> 
+    <tr>      
+      <td class="nombrecampo" width="10%" align="rigth">Mes: [% datos.mes %] </td>    
+      <td class="nombrecampo" width="20%" align="rigth">Código de Concepto: [% datos.codcon %]</td>          
+    </tr> 
+    <tr>
+      <td class="nombrecampo" width="10%" align="rigth">Quincena: [% datos.quincena %]</td>          
+      <td class="nombrecampo" width="10%" align="rigth">Descripción de Concepto: [% datos.descon %]</td>                         
+    </tr>
+  </table>
+</div>
+[% END %]
+
+<br/>
+
+[% IF lista %]
+[% total = 0 %]
+<div class="contenedor">
+  <table class="tabladetalle imprimirborde table table-hover">
+  <thead>
+    <tr class="resaltada"> 
+        <th> Cedula </th>
+        <th> Nombre y Apellidos </th>       
+        <th align="center"> Monto </th>        
+    </tr>
+  </thead>
+  <tbody>   
+    [% FOREACH fila IN lista %]
+      <tr>
+          <td> [% fila.cedula %]  </td>
+          <td> [% fila.trabajador %]  </td>        
+          <td class="camponum" >Bs. [% fila.deduce | format_number %] </td>                
+          [% total = total + fila.deduce  %]
+      </tr>
+    [% END %]  
+    <tr class="resaltada">
+      <th>&nbsp;</th>
+      <th class="nombrecamponum"> Monto Total </th>
+      <th class="nombrecamponum">Bs. [% total | format_number %]</th>
+    </tr>
+  </tbody>
+  </table>
+</div>
+[% END %]
+
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

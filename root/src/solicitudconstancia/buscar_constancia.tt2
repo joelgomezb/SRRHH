@@ -1,0 +1,59 @@
+[% #INCLUDE solicitudconstancia/acciones_solicitud_constancia.tt2 %] 
+[% SET navbar = 'constancia' %]
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: none;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [% Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Recibos de Pago</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li><a href="[% Catalyst.uri_for('/solicitudconstancia/inicio') %]">Constancia de Trabajo</a></li>
+	<li class="active">Validar Constancia</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<h2> VALIDAR CONSTANCIA </h2>
+
+[% js_local = BLOCK %]
+  $(document).ready(function(){
+	$('#btn_calcular').click( function() {
+	  $(":input").removeAttr("disabled");
+	  $('#frm_calculo_reduccion_monto').submit(); 
+	}); 
+  });
+[% END %]
+
+[% form %]
+
+
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

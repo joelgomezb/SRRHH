@@ -1,0 +1,48 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% USE date %]
+<table width="100%">  
+  <tr>
+      <table width="100%">  
+        <tr>
+        <td><img src="[% Catalyst.path_to('/root/static/images/ministerio.png') %]" /></td>        
+        <td><img align="right" src="[% Catalyst.path_to('/root/static/images/200.jpg') %]" /></td>       
+        </tr>
+      </table>
+  </tr>  
+  <tr> <td>&nbsp;</td> </tr>
+  <tr> <td>&nbsp;</td> </tr>
+  <tr>
+    <td> <h2 align="center" > OFICINA DE RECURSOS HUMANOS </h2> </td>
+  </tr>
+  <tr>
+    <td> <h2 align="center"> Resumen de Conceptos del Personal CORPOELEC ([% tipopersonal %]) para el Fideicomiso ([% mesesp %]-[% anio %])</h2> </td>
+  </tr>  
+  <tr> <td>&nbsp;</td> </tr>
+  <tr> <td>&nbsp;</td> </tr>
+  <tr> <td>&nbsp;</td> </tr>
+  <tr>      
+      <table width="100%" border=1 cellpadding="3">
+        [% total %] 
+        <tr bgcolor="#A9A9A9">
+          <th>Concepto</th> 
+          <th>Descripción</th>                 
+          <th>Monto</th>    
+        </tr> 
+        [% FOREACH fila IN resumen_nomina %]
+          [% IF fila.codcon < 5000 && fila.codcon != 4301 && fila.codcon != 4300 %]
+            <tr>
+              <td align="center"> [% fila.codcon %]  </td> 
+              <td align="left"> [% fila.descon %]  </td>                        
+              <td align="right"> Bs. [% fila.get_column( 'asignacion' ) + fila.get_column( 'deduccion' ) | format_number %] </td>
+              [% total = total + fila.get_column( 'deduccion' ) + fila.get_column( 'asignacion' ) %]  
+            </tr> 
+          [% END %]
+        [% END %]
+            <tr bgcolor="#A9A9A9">        
+              <th>&nbsp;</th> 
+              <th>&nbsp;</th>
+              <th align="right">Bs. [% total | format_number %] </th>         
+            </tr> 
+      </table> 
+    </tr>
+</table>

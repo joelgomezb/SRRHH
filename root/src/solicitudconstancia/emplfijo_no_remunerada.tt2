@@ -1,0 +1,129 @@
+[%- USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) -%]
+[%- USE date -%]
+[%- USE Latex;
+    FILTER latex("pdf");-%]
+
+\documentclass[12pt,spanish,letterpaper]{scrartcl}
+%\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage{textcomp}
+\usepackage[spanish]{babel}
+\usepackage{ucs}
+\usepackage{longtable}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{grffile}
+\usepackage{setspace}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage{anysize}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage[spanish]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{blindtext}
+
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+  
+\makeatother
+
+\renewcommand*{\familydefault}{\sfdefault}
+\renewcommand{\arraystretch}{0.5}
+
+\pretolerance=10000
+\tolerance=2000 
+
+\begin{document}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\cfoot{ 
+\textbf{\tiny{ (VA SIN ENMIENDA, CUALQUIER ALTERACION ANULA SU VALIDEZ) }}
+\vspace{1.6cm}
+\includegraphics[ width=16.5cm,height=1.6cm]{[% Catalyst.path_to('root/static/images/') %]/pieAVP.png}
+} 
+
+[% INCLUDE solicitudconstancia/encabezado_constancia.tt2 %]
+
+\vspace{0.5cm}
+
+\begin{center}
+\textbf{\Large CONSTANCIA DE TRABAJO }
+\end{center}
+
+\vspace{0.5cm}
+
+[% IF datos_persona_constancia.situacion == 2 %]
+\begin{raggedright}
+{\large Quien suscribe, [% datos_firma.cargo_firma_constancia | latex_encode %] [% 'de la Agencia Venezolana de Publicidad S.A., hace constar por medio de la presente que' | latex_encode %][% IF datos_persona_constancia.sexo == 'F' %] la ciudadana [% ELSE %] el ciudadano [% END %] [% datos_persona_constancia.primer_apellido _' '_ datos_persona_constancia.segundo_apellido  _' '_ datos_persona_constancia.primer_nombre _' '_ datos_persona_constancia.segundo_nombre | latex_encode %], [% 'titular de la cédula de identidad' | latex_encode %] N$^\circ$ [% datos_persona_constancia.nacionalidad %]-[% cedula %], presta sus servicios en esta agencia desde el [% datos_persona_constancia.fecha_ingreso.strftime('%d/%m/%Y') %], [% 'desempeñando el cargo de' | latex_encode %] [% datos_persona_constancia.descripcion_cargo | latex_encode %], y [% IF datos_persona_constancia.sexo == 'F' %] encargada [% ELSE %] encargado [% END %] como [% datos_persona_constancia.encargaduria | latex_encode %] en la [% datos_persona_constancia.nombre | latex_encode %]. }
+\end{raggedright}
+[% ELSE %]
+\begin{raggedright}
+{\large Quien suscribe, [% datos_firma.cargo_firma_constancia | latex_encode %] [% 'de la Agencia Venezolana de Publicidad S.A., hace constar por medio de la presente que' | latex_encode %] [% IF datos_persona_constancia.sexo == 'F' %] la ciudadana [% ELSE %] el ciudadano [% END %] [% datos_persona_constancia.primer_apellido _' '_ datos_persona_constancia.segundo_apellido  _' '_ datos_persona_constancia.primer_nombre _' '_ datos_persona_constancia.segundo_nombre | latex_encode %], [% 'titular de la cédula de identidad' | latex_encode %] N$^\circ$ [% datos_persona_constancia.nacionalidad %]-[% cedula %], presta sus servicios en esta agencia desde el [% datos_persona_constancia.fecha_ingreso.strftime('%d/%m/%Y') %], [% 'desempeñando el cargo de' | latex_encode %] [% datos_persona_constancia.descripcion_cargo | latex_encode %], [%IF datos_persona_constancia.sexo == 'F' %] adscrita [% ELSE %] adscrito [% END %] a la [% datos_persona_constancia.nombre | latex_encode %]. }
+\end{raggedright}
+[% END %]
+\vspace{0.5cm}
+
+\begin{raggedright}
+{\large [% 'Constancia que se expide a petición de la parte interesada, en la Ciudad de Caracas a los' | latex_encode %] [% date.format(date.now, '%d', 'es_VE') %] [% 'días del mes de' | latex_encode %] [% date.format(date.now, '%B', 'es_VE') %] de [% date.format(date.now, '%Y', 'es_VE') %]. }
+\end{raggedright}
+
+\vspace{1.5cm}
+
+[% IF datos_persona_constancia.encargaduria == "GERENTE" %]
+\begin{center}
+\begin{tabular}{c}
+[% SET firma = "/static/images/firmas/" _ datos_firma_supervisor.nb_imagen_firma _ ".png" %]
+[% TRY %]
+  [% USE File(Catalyst.path_to('root',firma)) %]
+
+  \includegraphics[ scale=1 ] {[% Catalyst.path_to('root', firma) %]} \tabularnewline
+
+[% CATCH File %]
+  \vspace{1.6cm} \tabularnewline
+[% END %]
+
+\footnotesize{\large{\textbf{ [% datos_firma_supervisor.nb_firma_constancia | latex_encode %]} }} \tabularnewline
+\footnotesize{ [% datos_firma_supervisor.cargo_firma_constancia  | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma_supervisor.pie0_firma_constancia | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma_supervisor.pie1_firma_constancia | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma_supervisor.pie2_firma_constancia | latex_encode %] } \tabularnewline
+\end{tabular}
+\end{center}
+[% ELSE %]
+\begin{center}
+\begin{tabular}{c}
+[% SET firma = "/static/images/firmas/" _ datos_firma.nb_imagen_firma _ ".jpg" %]
+[% TRY %]
+  [% USE File(Catalyst.path_to('root',firma)) %]
+
+  \includegraphics[ scale=0.4 ] {[% Catalyst.path_to('root', firma) %]} \tabularnewline
+
+[% CATCH File %]
+  \vspace{1.6cm} \tabularnewline
+[% END %]
+
+\footnotesize{\large{\textbf{ [% datos_firma.nb_firma_constancia | latex_encode %]} }} \tabularnewline
+\footnotesize{ [% datos_firma.cargo_firma_constancia  | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma.pie0_firma_constancia | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma.pie1_firma_constancia | latex_encode %] } \tabularnewline
+\tiny{ [% datos_firma.pie2_firma_constancia | latex_encode %] } \tabularnewline
+\end{tabular}
+\end{center}
+
+[% END %]
+
+\end{document}
+
+[% END; -%]

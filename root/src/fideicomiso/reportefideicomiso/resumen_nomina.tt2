@@ -1,0 +1,37 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+
+<h2 align="center" class="soloimpresion"> OFICINA DE RECURSOS HUMANOS </h2>
+<h1 align="center" class="ocultar-impresion">FIDEICOMISO SIGEFIRRHH</h1>
+<h2 align="center"> Resumen de Conceptos del Personal ([% tipopersonal %]) en ([% mesesp %]-[% anio %])</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir"  class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/resumen_nomina_pdf/' _ anio _'/'_ mes _'/'_ id_tipopersonal) %]"><img border="0" src="[% Catalyst.uri_for('/static/images/pdf1.jpeg') %]"/>&nbsp;Descargar PDF</a>   
+<font class="ocultar-impresion" >&nbsp;|</font>
+ <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee' ) %]">&nbsp;Regresar</a>  
+</div>
+
+[% IF resumen_nomina %]
+  [% total %]
+  <table class="tablaresultados" >
+    <tr>        
+        <th align="center">Concepto</th> 
+        <th align="center">Descripción</th>                 
+        <th align="center">Monto</th>         
+    </tr>
+  [% FOREACH fila IN resumen_nomina %]
+    [% IF fila.codcon < 5000 && fila.codcon != 4301 && fila.codcon != 4300%]
+    <tr>
+        <td align="center"> [% fila.codcon %]  </td> 
+        <td align="left"> [% fila.descon %]  </td>                        
+        <td align="right"> Bs. [% fila.get_column( 'asignacion' ) + fila.get_column( 'deduccion' ) | format_number %] </td>
+        [% total = total + fila.get_column( 'deduccion' ) + fila.get_column( 'asignacion' ) %]          
+    </tr>
+    [% END %]
+  [% END %]
+    <tr>        
+        <th>&nbsp;</th> 
+        <th>&nbsp;</th>
+        <th align="right">Bs. [% total | format_number %] </th>         
+    </tr> 
+  </table>
+[% END %]

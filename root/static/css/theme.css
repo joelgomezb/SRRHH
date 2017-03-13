@@ -1,0 +1,8 @@
+#theme-error {
+    display: none;
+    z-index: 0;
+    font-size: 16px;
+    padding: 20px 0;
+    background: #f39c12;
+    color: black !important;
+}

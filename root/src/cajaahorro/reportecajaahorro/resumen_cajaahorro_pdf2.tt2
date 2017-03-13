@@ -1,0 +1,49 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+<br/>
+<table width="100%" border="1">
+  <thead>
+    <tr>
+      <td colspan="3"><img src="[% Catalyst.path_to('/root/static/images/ministerio.png') %]" /></td>        
+      <td colspan="2"><img align="right" src="[% Catalyst.path_to('/root/static/images/200.jpg') %]" /></td>    
+    </tr>
+    
+    <tr>
+    <td align="center" colspan="5">OFICINA DE RECURSOS HUMANOS </td>    
+    </tr>
+    <tr>
+      <td align="center" colspan="5">Resumen de Retenciones de Caja de Ahorro</td>      
+    </tr>
+    <tr> 
+        <td colspan="5" class="nombrecampo" width="10%" > <h2> Quincena: [% datos.quincena %] al  [% datos.fecha.strftime('%d-%m-%Y')  %] </h2> </td>      
+    </tr>    
+    <tr> 
+        <td> Tipo Personal </td>  
+        <td align="center"> Concepto </td>
+        <td> Descripción </td>
+        <td align="center"> Cantidad </td>
+        <td align="center"> Monto </td>         
+    </tr>
+  </thead>
+  <tbody>
+    [% total = 0 %]
+      [% FOREACH fila IN resumen %]
+      <tr>
+          <td> [% fila.tipopersonal %] </td>
+          <td align="center"> [% fila.codcon %] </td>
+          <td> [% fila.descon %] </td>
+          <td align="center"> [% fila.get_column( 'cantidad' ) %] </td>
+          <td class="camponum">Bs. [% fila.get_column( 'total_deduce' ) + fila.get_column( 'total_asigna' ) | format_number %] </td>        
+          [% total =  total + fila.get_column( 'total_deduce' ) + fila.get_column( 'total_asigna' ) %]  
+      </tr>
+      [% END %]
+  </tbody>
+  <tfoot>
+    <tr bgcolor="#A9A9A9">         
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>Monto Total</td>
+      <td align="right">Bs.[% total | format_number %]</td>           
+    </tr>
+  </tfoot> 
+</table>

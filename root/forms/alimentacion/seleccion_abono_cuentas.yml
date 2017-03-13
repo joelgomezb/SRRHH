@@ -1,0 +1,57 @@
+---
+languages: [es]
+method: post
+id: frm_seleccion_abono_cuentas
+auto_constraint_class: "constraint_%t"
+elements:
+  - type: SimpleTable
+    name: tabla_nominas
+    id: tabla_nominas
+    attributes:
+      class: table table-hover
+    headers:      
+      - GRUPO NOMINA
+      - TOTAL Bs
+      - SELECCIONAR    
+  - type: Hidden
+    name: total_selec
+    id: total_selec
+  - type: Fieldset
+    name: contenedor_fe
+    legend:
+    attributes:
+      class: form-control
+    elements:
+      - type: Date
+        name: fe_abono
+        id: fe_abono    
+        label: Fecha de abono
+        attributes:
+          class:  form-control
+        day:
+          prefix: "--"
+          attributes:
+            class:  form-control
+            style: "width:10%;"
+        month:
+          prefix: "----"
+          attributes:
+            class:  form-control
+            style: "width:10%;"
+        year:
+          prefix: "----"
+          less: 4
+          plus: 0
+          attributes:
+            class:  form-control
+            style: "width:10%;"
+        strftime: "%Y-%m-%d"
+        constraints:
+          - type: Required
+            message: "Debe introducir una fecha para geerar el fichero"
+      - type: Submit
+        name: submit
+        id: submit
+        attributes:
+          class: btn btn-primary
+        value: GENERAR FICHERO

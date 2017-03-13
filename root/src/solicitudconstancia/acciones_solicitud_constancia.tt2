@@ -1,0 +1,9 @@
+<div style="padding: 10px 20px;"> 
+
+  <a id="solicitar_constancia" href="[% Catalyst.uri_for('/solicitudconstancia/solicitar_constancia' ) %]" class="btn btn-primary"> SOLICITAR CONSTANCIA </a>
+  [% IF Catalyst.user_exists && Catalyst.user.administrador == 'S' %]
+	<a id="crear_constancia" href="[% Catalyst.uri_for('/solicitudconstancia/crear_constancia' ) %]" class="btn btn-primary"> CREAR CONSTANCIA </a>
+	<a id="validar_constancia" href="[% Catalyst.uri_for('/solicitudconstancia/buscar_constancia' ) %]" class="btn btn-primary"> VALIDAR CONSTANCIA </a>
+  [% END %]
+
+</div>

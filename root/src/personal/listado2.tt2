@@ -1,0 +1,104 @@
+[% USE date %]
+[% MACRO number(n) GET n.chunk(-3).join('.') %]
+[%- USE Latex;
+    FILTER latex("pdf");-%]
+\documentclass[spanish]{article}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=1.5cm,bmargin=1.5cm,lmargin=1cm,rmargin=2cm}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage{textcomp}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\begin{document}
+\includegraphics[width=20cm]{[% Catalyst.path_to('root/static/images/') %]/cintillo.png}
+
+\begin{center}
+\textbf{\Large \uline{LISTADO DE GANADORES (ASCENSO)}}
+\par\end{center}{\Large \par}
+
+\vspace{1cm}
+
+[%- SET dependencia = '' %]
+[%- SET cod_nomina = '' %]
+[%- FOREACH fila IN primeros %]
+  [%- IF loop.first %]
+\noindent \textbf{ \uline{[% fila.dependencia %]}}
+
+\vspace{0.2cm}
+%%% IMPRIMIR CARGO %%%
+\begin{center}
+\textbf{ [% fila.cod_nomina %] - [% fila.cargo_clasificador %] - [% fila.cargo_especifico %] }
+\end{center}
+\vspace{0.2cm}
+
+%%% ABRIR TABLA %%%
+{\footnotesize
+\begin{center}
+\begin{tabular}{|>{\centering}p{3cm}|>{\centering}p{10cm}|}
+\hline
+\rowcolor[gray]{.9} Cédula & Nombre y Apellido\tabularnewline
+\hline
+  [%- END %]
+  [%- IF cod_nomina != fila.cod_nomina && ! loop.first %]
+%%% CERRAR TABLA ANTERIOR %%%
+\end{tabular} %fin1
+\end{center}
+}
+
+\vspace{0.5cm}
+
+    [% IF dependencia != fila.dependencia && ! loop.first %]
+\noindent \textbf{ \uline{[% fila.dependencia %]}}
+
+    [%- END %]
+\vspace{0.2cm}
+%%% IMPRIMIR CARGO %%%
+\begin{center}
+\textbf{ [% fila.cod_nomina %] - [% fila.cargo_clasificador %] - [% fila.cargo_especifico %] }
+\end{center}
+\vspace{0.2cm}
+
+%%% ABRIR TABLA %%%
+{\footnotesize
+\begin{center}
+\begin{tabular}{|>{\centering}p{3cm}|>{\centering}p{10cm}|}
+\hline
+\rowcolor[gray]{.9} Cédula & Nombre y Apellido\tabularnewline
+\hline
+  [%- END %]
+%%% IMPRIMIR DETALLE FILA %%%
+[% number(fila.cedula) %] & [% fila.concursante %] \tabularnewline
+\hline
+  [%- SET cod_nomina = fila.cod_nomina %]
+  [%- SET dependencia = fila.dependencia %]
+  [%- IF loop.last %]
+%%% CERRAR ULTIMA TABLA %%%
+\end{tabular} %fin2
+\end{center}
+}
+  [%- END %]
+[%- END %]
+
+\end{document}
+
+[% END; -%]

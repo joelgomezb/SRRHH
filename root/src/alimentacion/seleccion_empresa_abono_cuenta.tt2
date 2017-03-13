@@ -1,0 +1,8 @@
+<h1 align="center">ALIMENTACIÓN</h1>
+<h2>Seleccionar Empresa para Generar fichero de Abono a Cuenta, año [% anio %] mes [% mes %] </h2>
+
+<div class="imprimir">
+  <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/alimentacion' ) %]">&nbsp;Regresar</a>
+</div>
+
+[% form %]

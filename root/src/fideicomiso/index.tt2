@@ -1,0 +1,5 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+
+<h2 align="center"> REPORTES SIGEFIRRHH </h2>
+
+<p align="center">  Bienvenido a la aplicación para obtener reportes del SIGEFIRRHH, seleccione del menu superior izquierdo el módulo que desea utilizar </p>

@@ -1,0 +1,114 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET navbar = 'caja' %]
+[% js_local = BLOCK %]
+$(document).ready(function(){
+  
+  $('#enlace_imprimir').click( function() {
+    if ( confirm("¿Desea imprimir la solicitud?") ) {
+      window.print();
+      //window.close();
+    }
+  });
+  
+});
+[% END %]
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Constancias de Trabajo</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li>Administración</li>
+	<li><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro') %]">Caja de Ahorros</a></li>
+	<li class="active">Resumen</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<h2 align="center" class="soloimpresion"> OFICINA DE RECURSOS HUMANOS </h2>
+
+<h2 align="center" >Resumen de Retenciones de Caja de Ahorro</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir" class="ocultar-impresion btn btn-primary" href="#"><i class="fa fa-print"></i> &nbsp;Imprimir Resumen</a>
+ <a id="listado_general" class="ocultar-impresion btn btn-primary" href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/listado_general/' _ datos.anio _'/'_ datos.mes _'/'_ datos.quincena ) %]"><i class="fa fa-print"></i>&nbsp;Imprimir Listado General</a>
+ <a id="generar_archivo" class="ocultar-impresion btn btn-primary" href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/generar_archivo/' _ datos.anio _'/'_ datos.mes _'/'_ datos.quincena ) %]"><i class="fa fa-file-o"></i>&nbsp;Generar Archivo</a> 
+ <a id="archivo_pdf" class="ocultar-impresion btn btn-primary" href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/resumen_cajaahorro_pdf/' _ datos.anio _'/'_ datos.mes _'/'_ datos.quincena ) %]"><i class="fa fa-file-pdf-o"></i>&nbsp;Archivo PDF</a>   
+</div>
+
+[% IF datos %]
+
+  <table class="table">
+    <tr> 
+      <td class="nombrecampo" width="10%" >Quincena: [% datos.quincena %] al  [% datos.fecha.strftime('%d-%m-%Y')  %] </td>      
+    </tr>     
+  </table>
+
+[% END %]
+
+[% IF resumen %]
+<fieldset class="principal">
+  <table class="table table-hover">
+    <tr class="resaltada"> 
+        <th>Tipo Personal</th>
+        <th align="center">Concepto</th>
+        <th>Descripción</th>
+        <th align="center">Cantidad</th>
+        <th align="center">Monto</th> 
+        <th align="center" class="ocultar-impresion">Detalle</th> 
+    </tr>
+  [% total = 0 %]
+  [% FOREACH fila IN resumen %]
+    <tr>
+        <td> [% fila.tipopersonal %] </td>
+        <td  class="campocent"> [% fila.codcon %] </td>
+        <td> [% fila.descon %] </td>
+        <td class="camponum"> [% fila.get_column( 'cantidad' ) %] </td>
+        <td class="camponum">Bs. [% fila.get_column( 'total_deduce' ) + fila.get_column( 'total_asigna' ) | format_number %] </td>        
+        [% total =  total + fila.get_column( 'total_deduce' ) + fila.get_column( 'total_asigna' ) %]  
+        <td class="campocent ocultar-impresion"> <a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/listado_detalle/' _ datos.anio _'/'_ datos.mes _'/'_ datos.quincena _'/'_ fila.codcon _'/'_ fila.id_tipo_personal _'/'_ fila.id_concepto ) %]">Ver Detalle</a></td>
+    </tr>
+  [% END %]
+    <tr class="resaltada">         
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
+        <th class="nombrecamponum">Bs. [% total | format_number %]</th> 
+        <th class="ocultar-impresion">&nbsp;</th> 
+    </tr>  
+  </table>
+[% ELSE %]
+
+<b> No hay registros </b>
+</fieldset>
+[% END %]
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

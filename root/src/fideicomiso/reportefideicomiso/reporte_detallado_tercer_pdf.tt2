@@ -1,0 +1,50 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% USE Date %]
+
+<table width="100%">
+  <tr> 
+    <table width="100%">  
+      <tr>
+      <td><img src="[% Catalyst.path_to('/root/static/images/ministerio.png') %]" /></td>        
+      <td><img align="right" src="[% Catalyst.path_to('/root/static/images/200.jpg') %]" /></td>       
+      </tr>
+    </table>
+  </tr>
+  <tr> <td>&nbsp;</td> </tr>
+  <tr> <h2 align="center"> OFICINA DE RECURSOS HUMANOS </h2> </tr>
+  <tr> <h2 align="center"> Personal CORPOELEC ([% tipopersonal %]) NO CONSIDERADO para el cálculo del Fideicomiso ([% mes %]-[% anio %])</h2> </tr>    
+  <tr> <td>&nbsp;</td> </tr>
+  <tr>  
+    [% total_asigna = 0 %]
+    [% total_deduce = 0 %] 
+    [% cont = 1 %]
+      <table border=1 cellpadding="1" >          
+          <tr bgcolor="#A9A9A9">  
+			  <th align="center">N°</th>
+              <th>Cedula</th> 
+              <th>Nombre y Apellidos</th>         
+              <th>Fecha Ingreso Organismo</th> 
+              <th>Fecha Prestaciones</th> 
+              <th>Fecha Vacaciones</th>
+              <th>Fecha Antigüedad</th>
+              <th>Fecha Ingreso APN</th> 
+          </tr>          
+        [% FOREACH fila IN detalle_fideicomiso %]          
+          <tr>  
+          <td align="center"> [% cont %]  </td>
+              <td align="center"> [% fila.cedula %]  </td> 
+              <td align="left"> [% fila.primer_nombre _ ' '_  fila.segundo_nombre _ ' ' _ fila.primer_apellido _ ' ' _ fila.segundo_apellido %]  </td>        
+              <td align="center"> [% fila.ingresoorganismo.strftime('%d-%m-%Y') %] </td> 
+              [% fechaprestaciones = fila.get_column( 'fechaprestaciones' ) ;
+                fechavacaciones = fila.get_column( 'fechavacaciones' );
+                fechaantiguedad = fila.get_column( 'fechaantiguedad' );
+                fechaingresoapn = fila.get_column( 'fechaingresoapn' ) %]
+              <td align="center"> [% fechaprestaciones %]  </td>  
+              <td align="center"> [% fechavacaciones %]  </td>
+              <td align="center"> [% fechaantiguedad %]  </td>
+              <td align="center"> [% fechaingresoapn %]  </td>
+               [% cont = cont + 1 %]
+          </tr>          
+        [% END %]          
+        </table>    
+<table>

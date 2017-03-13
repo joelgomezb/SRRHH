@@ -1,0 +1,69 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET formato_fecha = '%d/%m/%Y' %]
+
+[% js_local = BLOCK %]
+$(document).ready(function(){
+  
+  $('#enlace_imprimir').click( function() {
+    if ( confirm("¿Desea imprimir la solicitud?") ) {
+      window.print();
+      //window.close();
+    }
+  });
+  
+});
+[% END %]
+
+</br>
+
+<h2 align="center" class="soloimpresion"> OFICINA DE RECURSOS HUMANOS </h2>
+
+[% IF detalle_fideicomiso %]
+<h1 align="center" class="ocultar-impresion">FIDEICOMISO SIGEFIRRHH</h1>
+<h2 align="center"> Personal AVP ([% tipopersonal %]) NO CONSIDERADO para el cálculo del Fideicomiso ([% trimestre %]-Trimestre-[% anio %])</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir"  class="ocultar-impresion" href="#"><img border="0" src="[% Catalyst.uri_for('/static/images/printer.png') %]"/>&nbsp;Imprimir </a> 
+<font class="ocultar-impresion" >&nbsp;|</font>
+ <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee_trimestral' ) %]">&nbsp;Regresar</a>
+</div>
+
+[% total_asigna = 0 %]
+[% total_deduce = 0 %] 
+[% cont = 1 %]
+  <table class="tablaresultados" >
+    <thead>
+    <tr> 
+    	<th align="center">N°</th>
+        <th align="center">Cedula</th> 
+        <th align="center">Nombre y Apellidos</th>         
+        <th align="center">Fecha Ingreso Organismo</th> 
+        <th align="center">Fecha Prestaciones</th> 
+        <th align="center">Fecha Vacaciones</th>
+        <th align="center">Fecha Antigüedad</th>
+        <th align="center">Fecha Ingreso APN</th> 
+    </tr>
+    </thead>
+  [% FOREACH fila IN detalle_fideicomiso %]
+    <tbody>
+    <tr>     
+    <td align="center"> [% cont %]  </td>
+        <td align="center"> [% fila.cedula %]  </td> 
+        <td align="left">   [% fila.nombre_completo %]  </td>        
+        <td align="center"> [% fila.ingresoorganismo.strftime(formato_fecha) %] </td> 
+        <td align="center"> [% fila.fecha_prestaciones.strftime(formato_fecha) %]  </td>  
+        <td align="center"> [% fila.fecha_vacaciones.strftime(formato_fecha) %]  </td>
+        <td align="center"> [% fila.fecha_antiguedad.strftime(formato_fecha) %]  </td>
+        <td align="center"> [% fila.fecha_ingreso_apn.strftime(formato_fecha) %]  </td>
+         [% cont = cont + 1 %]
+    </tr>
+    </tbody>
+  [% END %]
+     
+  </table>
+
+[% ELSE %]
+
+<h2 align="center"> No existe personal ([% tipopersonal %]) NO CONSIDERADO para el cálculo del Fideicomiso ([% mesesp %]-[% anio %])</h2>
+
+[% END %]

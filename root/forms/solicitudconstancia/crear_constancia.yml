@@ -1,0 +1,69 @@
+languages: [es]
+method: post
+id: frm_crear_constancia
+enctype: multipart/form-data
+auto_constraint_class: "constraint_%t"
+indicator: submit
+elements:
+  - type: Fieldset
+    name: crear_constancia
+    id: crear_constancia
+    elements:      
+      - type: Text
+        name: cedula_solicitud
+        id: cedula_solicitud
+        label: Ingrese el N° de cédula del trabajador        
+        attributes:
+          class: form-control
+          style: "width:20%;"
+        constraints:
+          - type: Required
+            message: "Debe ingresar un número de cédula"
+      - type: Fieldset
+        name: seleccionar_tipo_constancia
+        id: seleccionar_tipo_constancia        
+        elements:      
+          - type: Select
+            name: tipo_constancia
+            id: tipo_constancia
+            label: Seleccione el tipo de constancia        
+            attributes:
+              class: form-control
+              style: "width:20%;"
+            empty_first: 1
+            empty_first_label: --SELECCIONE--
+            options:            
+              - [ '1', 'Constancia Remunerada' ]
+              - [ '2', 'Constancia No Remunerada' ] 
+            constraints:
+              - type: Required
+                message: "Debe seleccionar un tipo de constancia"
+      - type: Fieldset
+        name: seleccionar_periodo_constancia
+        id: seleccionar_periodo_constancia        
+        elements:      
+          - type: Select
+            name: periodo_constancia
+            id: periodo_constancia
+            attributes:
+              class: form-control
+              style: "width:20%;"
+            label: Seleccione el período de la constancia        
+            empty_first: 1
+            empty_first_label: --SELECCIONE-- 
+            options:            
+              - [ '1', 'Mensual' ]
+              - [ '2', 'Anual' ]
+            constraints:
+              - type: Required
+                message: "Debe seleccionar el período de la constancia "
+                when:        
+                  field: tipo_constancia
+                  value: 1 
+      - type: Submit
+        name: submit
+        id: submit
+        attributes:
+          class: btn btn-primary
+          style: "margin: 10px;"
+        value: DESCARGAR

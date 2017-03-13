@@ -1,0 +1,65 @@
+languages: [es]
+method: post
+id: frm_solicitar_constancia
+enctype: multipart/form-data
+auto_constraint_class: "constraint_%t"
+indicator: submit
+elements:
+  - type: Fieldset
+    name: seleccionar_tipo_constancia
+    id: seleccionar_tipo_constancia
+    attributes:
+      class: principal
+    elements:      
+      - type: Select
+        name: tipo_constancia
+        id: tipo_constancia
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el tipo de constancia        
+        empty_first: 1
+        empty_first_label: --SELECCIONE--
+        options:            
+          - [ '1', 'Constancia Remunerada' ]
+          - [ '2', 'Constancia No Remunerada' ] 
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un tipo de constancia"
+  - type: Fieldset
+    name: seleccionar_periodo_constancia
+    id: seleccionar_periodo_constancia
+    attributes:
+      class: principal
+    elements:      
+      - type: Select
+        name: periodo_constancia
+        id: periodo_constancia
+        attributes:
+          class: form-control
+          style: "width:30%;"
+        label: Seleccione el período de la constancia        
+        empty_first: 1
+        empty_first_label: --SELECCIONE-- 
+        options:            
+          - [ '1', 'Mensual' ]
+          - [ '2', 'Anual' ]
+        constraints:
+          - type: Required
+            message: "Debe seleccionar el período de la constancia "
+            when:        
+              field: tipo_constancia
+              value: 1 
+  - type: Block
+    attributes:
+      class: botones
+    elements:
+    - type: Submit
+      name: submit
+      attributes:
+          class: btn btn-primary
+          style: "margin: 10px 20px;"
+      id: submit
+      value: DESCARGAR
+#       attributes:
+#         onclick: "if ( confirm('¿Está seguro de que desea imprimir una solicitud de constancia de trabajo con los datos indicados?') ) {  $('#frm_solicitar_constancia').submit(); }"

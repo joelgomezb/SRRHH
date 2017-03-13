@@ -1,0 +1,70 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET navbar = 'caja' %]
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Constancias de Trabajo</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li>Administración</li>
+	<li><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro') %]">Caja de Ahorros</a></li>
+	<li class="active">Listado</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<h2>Retenciones de Caja de Ahorro para el año [% anio %] y el mes [% mes %]</h2>
+
+[% IF registros %]
+
+  <table class="table" >
+    <tr> 
+        <th align="center">Año</th>
+        <th align="center">Mes</th>
+        <th align="center">Quincena</th>        
+        <th align="center">Monto Total</th> 
+        <th align="center">Resumen</th> 
+        <th align="center">&nbsp;</th> 
+    </tr>
+  [% FOREACH fila IN registros %]
+    <tr>
+        <td align="center"> [% fila.anio %]  </td>
+        <td align="center"> [% fila.mes %]  </td>
+        <td align="center"> [% fila.semana_quincena %] </td>        
+        <td align="right" > [% fila.get_column( 'total' ) | format_number %] </td>        
+        <td align="center"><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/resumen_cajaahorro/' _ fila.anio _'/'_ fila.mes _'/'_ fila.semana_quincena  ) %]">Ver Resumen </a></td>
+        <td width="20%" align="center"><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/generar_archivo/' _ fila.anio _'/'_ fila.mes _'/'_ fila.semana_quincena ) %]"> Generar Archivo </a></td>
+    </tr>
+  [% END %]
+  </table>
+
+[% END %]
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

@@ -1,0 +1,77 @@
+[% SET page = 'detalle_quincena' %]
+<style type="text/css" media="print">
+body {
+  font-size: 0.9em;
+}
+table.tablasinborde {
+  font-size: 1em;
+}
+
+#header, #enlace_imprimir {
+   display:none;
+}
+
+table td {
+  border-collapse: collapse;
+  padding: 3px;
+}
+</style>
+
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+
+<img src="[% Catalyst.uri_for('/static/images/cintilloAVP.png') %]" width="300px" style="margin: 10px 10px;">
+<h2 style="margin-left:10px;">Recibo de Pago - Nómina Especial</h2>
+
+<table class="tablasinborde" width="95%" align="center">
+  <tr>
+    <td><strong>Código:</strong></td>
+    <td>[% recibo.codrac %]</td>
+    <td><strong>Apellidos y Nombres:</strong></td>
+    <td>[% recibo.nombre_completo %]</td>
+    <td><strong>Cédula:</strong></td>
+    <td>[% recibo.cedula %]</td>
+    <td><strong>Período:</strong></td>
+    <td>[% recibo.inicio %] al [% recibo.fin %]</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo:</strong></td>
+    <td>[% recibo.cargo %]</td>
+    <td><strong>Tipo de Personal:</strong></td>
+    <td colspan="3">[% recibo.tipopersonal %]</td>
+<!--    <td><strong>Sueldo Básico:</strong></td>
+    <td>[% recibo.suebas | format_number %]</td> -->
+  </tr>
+  <tr>
+    <td><strong>Unidad:</strong></td>
+    <td colspan="3">[% recibo.unidad %]</td>
+    <td><strong>Nómina Especial:</strong></td>
+    <td colspan="3">[% recibo.nomina_especial %]</td>
+  </tr>
+</table>
+<table class="tablaformato" width="95%" align="center">
+  <tr>
+    <th>Concepto</th>
+    <th>Descripción</th>
+    <th aling="right">Asignaciones</th>
+    <th>Deducciones</th>
+  </tr>
+  [% FOREACH detalle IN recibo.detalles %]
+  <tr>
+    <td>[% detalle.codcon %]</td>
+    <td>[% detalle.descon %]</td>
+    <td align="right">[% detalle.asigna | format_number %]</td>
+    <td align="right">[% detalle.deduce | format_number %]</td>
+  </tr>
+  [% END %]
+  <tr>
+    <td colspan="2" align="right"><strong>Totales:</strong></td>
+    <td align="right"><strong>[% recibo.total_asignaciones | format_number %]</strong></td>
+    <td align="right"><strong>[% recibo.total_deducciones | format_number %]</strong></td>
+  </tr>
+  <tr>
+    <td colspan="3" align="right"><strong>Neto:</strong></td>
+    <td align="right"><strong>[% ( recibo.total_asignaciones - recibo.total_deducciones ) | format_number %]</strong></td>
+  </tr>
+</table>
+
+<a id="enlace_imprimir" class="ocultar-impresion btn btn-primary" href="javascript:window.print();"><i class="fa fa-print"></i> Imprimir Recibo</a>

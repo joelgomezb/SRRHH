@@ -1,0 +1,20 @@
+languages: [es]
+method: post
+id: frm_validar_constancia
+enctype: multipart/form-data
+auto_constraint_class: "constraint_%t"
+indicator: submit
+elements: 
+  - type: Submit
+    name: submit
+    id: submit
+    attributes:
+      class: btn btn-primary
+      style: "margin: 10px 0px;"
+    value: VALIDAR 
+  - type: Reset
+    name: reset
+    id: reset
+    attributes:
+      class: btn btn-danger
+    value: NO VALIDAR 

@@ -1,0 +1,149 @@
+---
+languages: [es]
+method: post
+id: frm_seleccionar_nomina_mppee
+elements:
+  - type: Fieldset
+    name: datos_listado
+    legend: Ingresar Datos para Generar Archivo al Banco
+    attributes:
+      class: principal
+    elements:
+      - type: Select
+        name: anio
+        id: anio
+        attributes:
+          class: form-control
+          style: "width: 20%;"
+        label: Seleccione el Año
+        options: 
+          - [ 2016, 2016 ]
+          - [ 2015, 2015 ]
+          - [ 2014, 2014 ]
+          - [ 2013, 2013 ]
+          - [ 2012, 2012 ]
+          - [ 2011, 2011 ]
+          - [ 2010, 2010 ]
+          - [ 2009, 2009 ]          
+        empty_first: 1
+        empty_first_label: --Seleccione un año--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un año"
+      - type: Block
+        content_xml: "<br/>"
+      - type: Select
+        name: mes
+        id: mes
+        attributes:
+          class: form-control
+          style: "width: 20%;"
+        label: Seleccione el Mes
+        options: 
+          - [ 1, ENERO ]
+          - [ 2, FEBRERO ]
+          - [ 3, MARZO ]          
+          - [ 4, ABRIL ]
+          - [ 5, MAYO ]
+          - [ 6, JUNIO ]
+          - [ 7, JULIO ]
+          - [ 8, AGOSTO ]
+          - [ 9, SEPTIEMBRE ]
+          - [ 10, OCTUBRE ]
+          - [ 11, NOVIEMBRE ]
+          - [ 12, DICIEMBRE ]
+        empty_first: 1
+        empty_first_label: --Seleccione un mes--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un mes"
+      - type: Block
+        content_xml: "<br/>"
+      - type: Select        
+        name: nro_cuenta
+        id: nro_cuenta
+        attributes:
+          class: form-control
+          style: "width: 40%;"
+        label: Seleccione el Nro de Cuenta Destino
+        options: 
+          - [ 01020762210000024206, "Gastos de Personal año 2016 0102-0762-21-00-00024206" ]
+#           - [ 01020762210000003476, "Gastos de personal 0102-0762-21-00-00003476" ]
+#           - [ 01020762290000007058, "Transferencias y donaciones 0102-0762-29-00-00007058" ]
+#           - [ 01020762250000015972, "Sueldos y Compensaciones (Año 2015) 0102-0762-25-00-00015972" ]
+          - [ 01020762210000024196, "Jubilaciones y Pensiones año 2016 0102-0762-21-00-00024196" ]
+#           - [ 01020762250000016023, "Jubilaciones y Pensiones (Año 2015) 0102-0762-25-00-00016023" ]
+        empty_first: 1
+        empty_first_label: --Seleccione una Cuenta--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar una Cuenta"
+      - type: Block
+        content_xml: "<br/>"
+      - type: Text
+        name: fecha_pago
+        id: fecha_pago
+        attributes:
+          class: form-control fechajquery
+          style: "width: 20%;"
+        label: Fecha efectiva de pago en banco
+        size: 8
+        constraints:
+          - type: Required
+            message: "Debe seleccionar una fecha"
+          - type: DateTime
+            parser: 
+              strptime: '%d-%m-%Y'
+            message: "El formato de fecha debe ser AAAA-MM-DD"
+        deflator:
+          - type: Strftime
+            strftime: "%d-%m-%Y"
+      - type: Block
+        content_xml: "<br/>"
+      - type: Select
+        name: tipo_n
+        id: tipo_n
+        attributes:
+          class: form-control
+          style: "width: 20%;"
+        label: Seleccione el Tipo de Nómina
+        options:           
+          - [ 1, ESPECIAL ]   
+          - [ 2, ORDINARIA ]
+        empty_first: 1
+        empty_first_label: --Seleccione un Tipo de Nómina--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un Tipo de Nómina"
+      - type: Block
+        content_xml: "<br/>"
+      - type: Select
+        container_attributes:
+          id: per
+          name: per
+        name: periodo
+        id: periodo
+        attributes:
+          class: form-control
+          style: "width: 20%;"
+        label: Seleccione el Período
+        options: 
+          - [ 1, 1ra Quincena ]
+          - [ 2, 2da Quincena ]                           
+        empty_first: 1
+        empty_first_label: --Seleccione un Período--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un Período"
+            when:
+              field: tipo_n
+              value: [ 2 ] 
+      - type: Block
+        content_xml: "<br/>"
+      - type: Submit
+        name: submit 
+        id: submit
+        attributes:
+          class: btn btn-primary
+          style: "margin: 10px 10px;"
+        value: GENERAR

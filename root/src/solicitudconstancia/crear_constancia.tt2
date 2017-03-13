@@ -1,0 +1,81 @@
+[% #INCLUDE solicitudconstancia/acciones_solicitud_constancia.tt2 %] 
+[% SET navbar = 'constancia' %]
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Constancia de Trabajo</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li><a href="[% Catalyst.uri_for('/solicitudconstancia/inicio') %]">Constancia de Trabajo</a></li>
+	<li class="active">Crear  Constancia</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+<h2> CREAR CONSTANCIA </h2>
+
+[% js_local = BLOCK %]
+
+function mostrar_secciones() {
+
+  $("#seleccionar_periodo_constancia").hide();	  
+  
+  var opcion = $('select[id = tipo_constancia]').val();
+  
+  if ( opcion == 1 ) {   
+	$("#seleccionar_periodo_constancia").show();	  
+  }
+  else if ( opcion == 2 ) {  
+	$("#seleccionar_periodo_constancia").hide();	  
+	$("#periodo_constancia").val("");
+  }
+  else {
+	$("#seleccionar_periodo_constancia").hide();
+	$("#periodo_constancia").val("");
+  }
+}
+  
+  
+$(document).ready(function(){
+  
+  mostrar_secciones();
+  
+  $('select[name = tipo_constancia]').change( function() {
+      mostrar_secciones();
+  });
+	
+});
+
+[% END %]
+
+[% form %]
+
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

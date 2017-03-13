@@ -1,0 +1,75 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET formato_fecha = '%d/%m/%Y' %]
+
+[% js_local = BLOCK %]
+$(document).ready(function(){
+  
+  $('#enlace_imprimir').click( function() {
+   // if ( confirm("¿Desea imprimir la solicitud?") ) {
+      //window.print();
+      //window.close();
+    //}
+  });
+  
+});
+[% END %]
+
+</br>
+
+<h2 align="center" class="soloimpresion"> OFICINA DE RECURSOS HUMANOS </h2>
+
+[% IF detalle_fideicomiso.size > 0 %]
+
+<h1 align="center" class="ocultar-impresion">FIDEICOMISO SIGEFIRRHH</h1>
+<h2 align="center"> Fideicomiso del Personal ([% tipopersonal %]) activo en ([% trimestre %]-[% anio %])</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir1"  class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/resumen_fideicomiso_trimestral_pdf/'_ anio _ '/' _ nro_trimestre _ '/' _ id_tipopersonal ) %]"><img border="0" src="[% Catalyst.uri_for('/static/images/pdf.png') %]"/>&nbsp;Descargar Reporte </a> 
+<font class="ocultar-impresion" >&nbsp;|</font>
+ <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee' ) %]">&nbsp;Regresar</a>
+</div>
+
+  <table class="tablaresultados" >
+    <thead>
+    <tr>      
+		<th align="center">N°</th> 
+        <th align="center">Cedula</th> 
+        <th align="center">Nombre y Apellidos</th>                 
+        <th align="center">Monto Prestaciones</th>
+        <th align="center">Monto Adicional</th>         
+        <th align="center">Monto Total de Prestaciones</th>        
+    </tr>
+    </thead>
+  [% monto_total = 0; monto_total_prestaciones = 0; monto_total_adicional = 0;%]
+  [% cont = 1 %]
+    <tbody>
+    [% FOREACH fila IN detalle_fideicomiso %]
+    <tr> 
+		<td align="center"> [% cont %]  </td>
+		<td align="center"> [% fila.get_column('cedula') %]  </td> 
+        <td align="left">   [% fila.get_column('primer_nombre') _ ' '_  fila.get_column('segundo_nombre' ) _ ' ' _ fila.get_column('primer_apellido') _ ' ' _ fila.get_column('segundo_apellido') %]  </td> 
+        <td align="right">Bs. [% fila.get_column( 'prestaciones' ) | format_number %]  </td> 
+        <td align="right">Bs. [% fila.get_column( 'adicional' ) | format_number %]  </td> 
+        <td align="right">Bs. [% fila.get_column( 'prestaciones' ) + fila.get_column( 'adicional' ) | format_number %]  </td> 
+        [% monto_total_prestaciones = monto_total_prestaciones + fila.get_column( 'prestaciones' ) %]
+        [% monto_total_adicional = monto_total_adicional + fila.get_column( 'adicional' ) %]
+        [% monto_total = monto_total + fila.get_column( 'prestaciones') + fila.get_column( 'adicional' ) %]
+        [% cont = cont + 1 %]
+    </tr>
+    [% END %]
+    <tr>
+	  <td align="center" colspan="2"><b>Cantidad: [% cont - 1 %] </b> </td>
+	  <td align="center"> <b>TOTALES</b> </td>
+	  <td align="right"><b>Bs. [% monto_total_prestaciones | format_number %]</b></td>
+	  <td align="right"><b>Bs. [% monto_total_adicional | format_number %]</b></td>
+	  <td align="right"><b>Bs. [% monto_total | format_number %]</b></td>
+    </tr>
+    </tbody>
+     
+  </table>
+  [% datos %]
+[% ELSE %]
+
+<h2 align="center"> No existe personal ([% tipopersonal %]) egresado con Fideicomiso en el ([% trimestre %]-[% anio %])</h2>
+
+[% END %]

@@ -1,0 +1,45 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+
+<h2 align="center" class="soloimpresion"> OFICINA DE RECURSOS HUMANOS </h2>
+<h1 align="center" class="ocultar-impresion"> FIDEICOMISO SIGEFIRRHH</h1>
+<h2 align="center"> Resumen de Conceptos del Personal ([% tipopersonal %]) <br/> 
+ NO CONSIDERADO para el cálculo del Fideicomiso ([% trimestre %] Trimestre-[% anio %])</h2>
+
+<div class="imprimir">
+ <a id="enlace_imprimir"  class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/reporte_resumen_trimestral_pdf/' _ anio _'/'_ nro_trimestre _'/'_ id_tipopersonal) %]"><img border="0" src="[% Catalyst.uri_for('/static/images/pdf1.jpeg') %]"/>&nbsp;Descargar PDF</a> 
+<font class="ocultar-impresion" >&nbsp;|</font>
+ <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee_trimestral' ) %]">&nbsp;Regresar</a>  
+</div>
+
+[% IF resumen_fideicomiso.size > 0 %]
+  [% total %]
+  [% cont = 1 %]
+  <table class="tablaresultados" >
+    <tr>  
+		<th align="center">N°</th>
+        <th align="center">Concepto</th> 
+        <th align="center">Descripción</th>                 
+        <th align="center">Monto</th>         
+    </tr>
+  [% FOREACH fila IN resumen_fideicomiso %]
+    [% IF fila.codcon < 5000 && fila.codcon != 4301 && fila.codcon != 4300 %]
+    <tr>
+		<td align="center"> [% cont %]  </td>
+        <td align="center"> [% fila.codcon %]  </td> 
+        <td align="left"> [% fila.descon_completo %]  </td>                        
+        <td align="right"> Bs. [% fila.get_column( 'asignacion' ) + fila.get_column( 'deduccion' ) | format_number %] </td>
+        [% total = total + fila.get_column( 'deduccion' ) + fila.get_column( 'asignacion' ) %]       
+         [% cont = cont + 1 %]
+    </tr>
+    [% END %]
+  [% END %]
+    <tr>      
+		<th>&nbsp;</th> 
+        <th>&nbsp;</th> 
+        <th>&nbsp;</th>
+        <th align="right">Bs. [% total | format_number %] </th>         
+    </tr> 
+  </table>
+[% ELSE %]
+ <p class="nota">No existen registros para los parámetros seleccionados</p>
+[% END %]

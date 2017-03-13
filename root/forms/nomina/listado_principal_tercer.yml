@@ -1,0 +1,25 @@
+---
+languages: [es]
+method: post
+id: frm_listado_principal_tercer
+auto_constraint_class: "constraint_%t"
+elements:
+  - type: SimpleTable
+    name: tabla_nominas
+    id: tabla_nominas
+    attributes:
+      class: tablaresultados
+    headers:      
+      - GRUPO NOMINA
+      - PERIODO
+      - TOTAL Bs
+      - SELECCIONAR    
+  - type: Hidden
+    name: total_selec
+    id: total_selec
+  - type: Submit
+    name: submit
+    id: submit
+    attributes:
+      class: botones_solos
+    value: GENERAR ARCHIVO

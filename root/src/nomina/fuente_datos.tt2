@@ -1,0 +1,5 @@
+<table class="solapas">
+      <tr>
+          <td class="elemento"><a title="AVP" href="[% Catalyst.uri_for('/nomina/seleccionar_nomina_mppee') %]">Aceptar</a></td>
+      </tr>
+</table>

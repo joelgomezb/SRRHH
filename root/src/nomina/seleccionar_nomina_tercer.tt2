@@ -1,0 +1,114 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% INCLUDE nomina/fuente_datos.tt2 %] 
+[% js_local = BLOCK %]
+
+$(document).ready(function(){
+
+  $("div[name = per]").hide();
+
+  $("select[name = anio]").change( function() {
+
+      //var tipo = $("select[name = tipo_n]").val();
+      //var anio = $("select[name=anio]").val();
+      //var mes = $("select[name=mes]").val();
+      //var periodo = $("select[name=periodo]").val();
+      //if ( tipo == 0 ) {
+//        if ( anio != 0 &&  mes != 0 && periodo != 0) {       
+  //        window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + periodo + '/' + tipo;
+    //    }      
+      //}
+      //else{
+        //  window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + 0 + '/' + tipo;
+      //}
+  });  
+
+  $("select[name = mes]").change( function() { 
+
+      //var tipo = $("select[name = tipo_n]").val();
+      //var anio = $("select[name=anio]").val();
+      //var mes = $("select[name=mes]").val();
+      //var periodo = $("select[name=periodo]").val();
+      /*
+      if ( !anio ) {
+        alert("Seleccione el año");
+      }
+      else {
+        
+      }
+
+
+      if ( tipo == 2 ){
+        if ( anio != 0 &&  mes != 0 && periodo != 0) {       
+          window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + periodo + '/' + tipo;
+        }
+        else{
+        }
+      }        
+      else {
+        window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + 0 + '/' + tipo;
+      }
+*/
+  });  
+  
+  $("select[name = tipo_n]").change( function() { 
+    
+      var tipo = $("select[name = tipo_n]").val();
+      var anio = $("select[name=anio]").val();
+      var mes = $("select[name=mes]").val();   
+      var periodo = $("select[name=periodo]").val();
+
+      if ( !anio ){
+        alert("Seleccione el año");
+      }
+      else {
+        if ( !mes ){
+          alert("Seleccione el mes");
+        }
+        else {
+          if ( tipo == 1 ) {
+              $("div[name = per]").hide();
+              if ( anio != 0 &&  mes != 0 ) {
+                window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + 0 + '/' + tipo;  
+              }
+          }
+          else if ( tipo == 2 ){
+            $("div[name = per]").show();
+          }
+          else if ( !tipo ) {
+                $("div[name = per]").hide();
+          }
+          else {
+                $("div[name = per]").hide();
+          }
+        }
+      }
+  }); 
+
+  $("select[name = periodo]").change( function() {     
+
+      var anio = $("select[name=anio]").val();
+      var mes = $("select[name=mes]").val();
+      var periodo = $("select[name=periodo]").val();
+      var tipo = $("select[name = tipo_n]").val();
+      if ( !anio ) {
+       alert("Selecciones el año");
+      }
+      else {
+        if ( !mes ) {
+          alert("Selecciones el mes");
+        }
+        else {
+          if ( anio != 0 &&  mes != 0 && periodo != 0 && tipo ) {       
+            window.location = '[% Catalyst.uri_for("/nomina/listado_principal_tercer/") %]'+ anio + '/' + mes + '/' + periodo + '/' + tipo;
+          }
+        }
+      }     
+  });  
+
+});
+
+[% END %]
+
+<h1>SIGEFIRRHH-CORPOELEC</h1>
+<h3>GENERAR ARCHIVO AL BANCO</h3>
+[% form %]

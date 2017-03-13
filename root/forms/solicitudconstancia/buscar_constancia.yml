@@ -1,0 +1,30 @@
+languages: [es]
+method: post
+id: frm_buscar_constancia
+enctype: multipart/form-data
+auto_constraint_class: "constraint_%t"
+indicator: submit
+elements:
+  - type: Fieldset
+    name: validar_constancia
+    id: validar_constancia
+    attributes:
+      class: principal
+    elements:      
+      - type: Text
+        name: codigo_constancia
+        id: codigo_constancia
+        label: Ingrese código de constancia
+        attributes:
+          class: form-control
+          style: "width: 20%; margin: 10px 20px;"
+        constraints:
+          - type: Required
+            message: "Debe ingresar un código de constancia"
+      - type: Submit
+        name: submit
+        id: submit
+        attributes:
+          class: btn btn-primary
+          style: "margin: 10px 20px;"
+        value: CARGAR DATOS DE CONSTANCIA

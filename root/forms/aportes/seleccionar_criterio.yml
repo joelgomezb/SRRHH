@@ -1,0 +1,104 @@
+method: post
+id: frm_seleccionar_criterio
+auto_constraint_class: "constraint_%t"
+elements:
+  - type: Fieldset
+    name: datos_listado
+    legend: 
+    attributes:
+      class: principal
+    elements:
+      - type: Select
+        name: aporte
+        id: aporte
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el tipo de aporte
+        options: 
+          - [ 1, "Fondo de Ahorro Obligatorio de Vivienda (FAOV)"]
+          - [ 2, "Fondo de Jubilaciones (FJU)"]          
+        empty_first: 1
+        empty_first_label: --Seleccione tipo de aporte--
+        constraints:
+          - type: Required
+            message: "Debe el tipo de aporte"
+      - type: Block
+        id: contenedor_tipo_personal
+        name: contenedor_tipo_personal
+        attributes:
+          style: "display: none"
+        elements:
+          - type: Select
+            name: tipo_personal
+            id: tipo_personal
+            attributes:
+              class: form-control
+              style: "width: 30%;"
+            label: Seleccione el tipo personal        
+            options: 
+              - [ 1, "Empleado Fijo"]
+              - [ 2, "Obrero"] 
+              - [ 3, "Contratado"]
+            empty_first: 1
+            empty_first_label: --Seleccione tipo de personal--
+            constraints:
+              - type: Required
+                message: "Debe seleccionar el tipo de personal"
+                when:
+                  field: aporte
+                  value: 2 
+      - type: Select
+        name: anio
+        id: anio
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el Año
+        options: 
+          - [ 2016, 2016 ]
+          - [ 2015, 2015 ]
+          - [ 2014, 2014 ]
+          - [ 2013, 2013 ]
+          - [ 2012, 2012 ]
+          - [ 2011, 2011 ]
+          - [ 2010, 2010 ]                    
+        empty_first: 1
+        empty_first_label: --Seleccione un año--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un año"
+      - type: Select
+        name: mes
+        id: mes
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el Mes
+        options: 
+          - [ 1, ENERO ]
+          - [ 2, FEBRERO ]
+          - [ 3, MARZO ]          
+          - [ 4, ABRIL ]
+          - [ 5, MAYO ]
+          - [ 6, JUNIO ]
+          - [ 7, JULIO ]
+          - [ 8, AGOSTO ]
+          - [ 9, SEPTIEMBRE ]
+          - [ 10, OCTUBRE ]
+          - [ 11, NOVIEMBRE ]
+          - [ 12, DICIEMBRE ]
+        empty_first: 1
+        empty_first_label: --Seleccione un mes--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un mes"
+      - type: Block
+        elements:
+          - type: Submit
+            name: submit
+            id: submit
+            attributes:
+              class: btn btn-primary
+              style: "margin: 10px 10px;"
+            value: GENERAR ARCHIVO

@@ -1,0 +1,56 @@
+---
+languages: [es]
+method: post
+id: frm_index
+elements:
+  - type: Fieldset
+    name: datos_registro
+    legend: Datos para las Retenciones de Caja de Ahorro (CATMENEL)
+    attributes:
+      class: principal
+    elements:
+      - type: Select
+        name: anio
+        id: anio
+        attributes:
+          class: form-control
+          style: "width: 30%;"      
+        label: Seleccione el Año
+        options: 
+          - [ 2016, 2016 ]
+          - [ 2015, 2015 ]
+          - [ 2014, 2014 ] 
+          - [ 2013, 2013 ]
+          - [ 2012, 2012 ]
+          - [ 2011, 2011 ]
+          - [ 2010, 2010 ]                   
+        empty_first: 1
+        empty_first_label: --Seleccione un año--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un año"
+      - type: Select
+        name: mes
+        id: mes
+        attributes:
+          class: form-control
+          style: "width: 30%;"      
+        label: Seleccione el Mes
+        options: 
+          - [ 1, ENERO ]
+          - [ 2, FEBRERO ]
+          - [ 3, MARZO ]          
+          - [ 4, ABRIL ]
+          - [ 5, MAYO ]
+          - [ 6, JUNIO ]
+          - [ 7, JULIO ]
+          - [ 8, AGOSTO ]
+          - [ 9, SEPTIEMBRE ]
+          - [ 10, OCTUBRE ]
+          - [ 11, NOVIEMBRE ]
+          - [ 12, DICIEMBRE ]
+        empty_first: 1
+        empty_first_label: --Seleccione un mes--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un mes"

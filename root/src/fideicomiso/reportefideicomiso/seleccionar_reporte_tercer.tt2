@@ -1,0 +1,18 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% INCLUDE fideicomiso/reportefideicomiso/fuente_datos.tt2 %] 
+[% js_local = BLOCK %]
+
+$(document).ready(function(){
+
+$('#btn_guardar').click( function() { 
+    $(":input").removeAttr("disabled");
+    $('#frm_seleccionar_reporte_tercer').submit();    
+   });
+
+});
+
+[% END %]
+
+<h1>SIGEFIRRHH CORPOELEC</h1>
+
+[% form %]

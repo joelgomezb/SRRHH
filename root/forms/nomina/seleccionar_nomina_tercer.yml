@@ -1,0 +1,75 @@
+---
+languages: [es]
+method: post
+id: frm_seleccionar_nomina_tercer
+elements:
+  - type: Fieldset
+    name: datos_listado
+    legend: 
+    attributes:
+      class: principal
+    elements:
+      - type: Select
+        name: anio
+        id: anio
+        label: Seleccione el Año
+        options: 
+          - [ 2013, 2013 ]
+          - [ 2012, 2012 ]
+          - [ 2011, 2011 ]
+          - [ 2010, 2010 ]
+          - [ 2009, 2009 ]          
+        empty_first: 1
+        empty_first_label: --Seleccione un año--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un año"
+      - type: Select
+        name: mes
+        id: mes
+        label: Seleccione el Mes
+        options: 
+          - [ 1, ENERO ]
+          - [ 2, FEBRERO ]
+          - [ 3, MARZO ]          
+          - [ 4, ABRIL ]
+          - [ 5, MAYO ]
+          - [ 6, JUNIO ]
+          - [ 7, JULIO ]
+          - [ 8, AGOSTO ]
+          - [ 9, SEPTIEMBRE ]
+          - [ 10, OCTUBRE ]
+          - [ 11, NOVIEMBRE ]
+          - [ 12, DICIEMBRE ]
+        empty_first: 1
+        empty_first_label: --Seleccione un mes--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un mes"
+      - type: Select
+        name: tipo_n
+        id: tipo_n
+        label: Seleccione el Tipo de Nómina
+        options:           
+          - [ 1, ESPECIAL ]   
+          - [ 2, ORDINARIA ]
+        empty_first: 1
+        empty_first_label: --Seleccione un Tipo de Nómina--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un Tipo de Nómina"
+      - type: Select
+        container_attributes:
+          id: per
+          name: per
+        name: periodo
+        id: periodo
+        label: Seleccione el Período
+        options: 
+          - [ 1, 1ra Quincena ]
+          - [ 2, 2da Quincena ]                           
+        empty_first: 1
+        empty_first_label: --Seleccione un Período--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un Período"

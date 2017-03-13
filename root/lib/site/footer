@@ -1,0 +1,10 @@
+<!-- BEGIN site/footer 
+<div id="copyright">&copy; [% site.copyright %]</div> -->
+<!-- END site/footer -->
+
+
+
+<footer class="main-footer">
+  <strong>&copy; 2016 <a href="http://minci.gob.ve/tag/agencia-venezolana-de-publicidad/">Agencia Venezolana de Publicidad.</a></strong> Todos los Derechos Reservados.
+</footer>
+<!-- END site/footer -->

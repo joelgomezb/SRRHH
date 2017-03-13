@@ -1,0 +1,25 @@
+<h2>Datos de VCONSTANCIA </h2>
+
+<table>
+<tr>
+  <th></th>
+</tr>
+<tr>
+  <td></td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Cuenta</th>
+  <th>Descripción</th>
+  <th>Monto</th>
+</tr>
+[% FOREACH fila IN datos_constancia %]
+<tr>
+  <td>[% fila.concepto %]</td>
+  <td>[% fila.descripcion %]</td>
+  <td>[% fila.monto %]</td>
+</tr>
+[% END %]
+</table>

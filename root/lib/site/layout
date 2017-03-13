@@ -1,0 +1,10 @@
+[% IF page != 'login-page' %]
+   [% PROCESS site/header %]
+   [% PROCESS site/bar %]
+
+   [% content %]
+   [% PROCESS site/footer %]
+[% ELSE %]
+   [% content %]
+[% END %]
+

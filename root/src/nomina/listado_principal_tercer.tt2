@@ -1,0 +1,72 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% INCLUDE nomina/fuente_datos.tt2 %] 
+[% js_local = BLOCK %]
+
+function calcular_total() {
+  var total = 0;
+  
+  $('input:checkbox[name*=check]:checked').each( function() {
+      var monto = parseFloat(  $(this).parent().parent().siblings().find('[name*=monto]').text().replace('.', '').replace('.', '').replace(',', '.') );       
+      total += monto;
+    } );
+    return total;
+}
+
+function mostrar_total() {
+  var total = calcular_total();
+
+  if ( total == 0) {
+    $('span[name=total_seleccionado]').text( '0,00' );  
+  }
+  else {
+    $('#total_selec').val( total );
+    $('span[name=total_seleccionado]').text( $('#total_selec').formatNumber({ locale: "es" }).val() );  
+  }  
+}
+
+
+
+$(document).ready(function(){
+
+  $('input:checkbox[name*=check]').click( function() {
+    mostrar_total();         
+  } );
+  
+  $('#submit').click( function() {
+    var total ;
+    if ( confirm("El archivo al banco será generado por un monto de Bs "+ $('#total_selec').val() ) ) {
+      $('#frm_listado_principal_tercer').submit();
+    }
+    else {
+      return false;
+    }
+  });
+
+});
+
+[% END %]
+<h1>SIGEFIRRHH CORPOELEC</h1>
+[% IF tipo == 1 %]
+  <h2>NOMINAS ESPECIALES DEL MES [% mes %] DEL AÑO [% anio %]</h2>
+[% ELSE %]
+  <h2>NOMINAS ORDINARIAS DE LA [% periodo_txt %] DEL MES [% mes %] DEL AÑO [% anio %]</h2>
+[% END %]
+
+
+<div class="imprimir">
+  <a id="enlace_imprimir" class="ocultar-impresion" href="[% Catalyst.uri_for('/nomina/seleccionar_nomina_tercer' ) %]">&nbsp;Regresar</a>
+</div>
+
+[% IF nominas.size > 0 %]
+  [% IF total_seleccionados %]
+    <table class="tablaresultados">
+    <tr>
+    <td width="70%" align="rigth"><b>TOTAL DE SELECCIONADOS</b></td>
+    <td width="30%" align="rigth"> [% total_seleccionados | format_number %]</td>
+    </tr>
+    </table>
+  [% END %]
+    [% form %]
+[% ELSE %]
+  <h3> NO HAY INFORMACION PARA LOS PARAMETROS SELECCIONADOS</h3>
+[% END %]

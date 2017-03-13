@@ -1,0 +1,90 @@
+---
+languages: [es]
+method: post
+id: frm_seleccionar_reporte_mppee_trimestral
+elements:
+  - type: Fieldset
+    name: datos_registro
+    legend: Datos de Fideicomiso
+    attributes:
+      class: principal
+    elements:
+      - type: Select
+        name: anio
+        id: anio
+        attributes:
+          class: form-control
+          style: "width: 20%;"
+        label: Seleccione el Año
+        options: 
+          - [ 2016, 2016 ]
+          - [ 2015, 2015 ]
+          - [ 2014, 2014 ]
+          - [ 2013, 2013 ]
+          - [ 2012, 2012 ]
+          - [ 2011, 2011 ]
+          - [ 2010, 2010 ]                    
+        empty_first: 1
+        empty_first_label: --Seleccione un año--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un año"
+      - type: Select
+        name: trimestre
+        id: trimestre
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el Trimestre
+        options: 
+          - [ 1, "1er Trimestre" ]
+          - [ 2, "2do Trimestre" ]
+          - [ 3, "3er Trimestre" ]
+          - [ 4, "4to Trimestre" ]          
+        empty_first: 1
+        empty_first_label: --Seleccione un trimestre--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un trimestre"
+      - type: Select
+        name: tipopersonal
+        id: tipopersonal
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione el tipo de Personal                
+        empty_first: 1
+        empty_first_label: --Seleccione una opción--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un tipo de personal"
+      - type: Select
+        name: tipo_reporte
+        id: tipo_reporte
+        attributes:
+          class: form-control
+          style: "width: 30%;"
+        label: Seleccione Reporte 
+        options: 
+          - [ 1, "Personal NO CONSIDERADO" ]
+          - [ 2, "Resumen de Conceptos del Personal NO CONSIDERADO" ]          
+          - [ 3, "Resumen de Conceptos del Personal" ]
+          - [ 4, "Resumen de Personal Egresado" ]
+          - [ 5, "Resumen de incorporaciones al fideicomiso" ]
+          - [ 6, "Resumen de Prestaciones del Personal Activo" ]
+        empty_first: 1
+        empty_first_label: --Seleccione un Reporte--
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un Reporte"
+  - type: Block
+    attributes:
+      class: botones
+    elements:
+    - type: Button
+      name: btn_guardar
+      id: btn_guardar
+      attributes:
+        class: btn btn-primary
+        style: "margin: 10px 10px;"
+      value: Ver Reporte

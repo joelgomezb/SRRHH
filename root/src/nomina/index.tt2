@@ -1,0 +1,48 @@
+[% SET navbar = 'nomina' %]
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Constancias de Trabajo</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li class="active">Administración</li>
+	<li class="active">Caja de Ahorros</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+
+[% INCLUDE nomina/fuente_datos.tt2 %] 
+
+<h2>GENERAR FICHERO AL BANCO</h2>
+	<h3>Seleccione en las solapas superiores la fuente de datos</h3>
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

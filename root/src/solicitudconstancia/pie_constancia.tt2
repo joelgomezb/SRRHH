@@ -1,0 +1,4 @@
+\lhead{
+  \includegraphics[ width=18.5cm,height=1.5cm]{[% Catalyst.path_to('root/static/images/') %]/pieAVP.png}
+}
+

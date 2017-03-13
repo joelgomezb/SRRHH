@@ -1,0 +1,5 @@
+<table class="solapas">
+      <tr>
+          <td class="elemento"><a title="AVP" class="btn btn-primary" style="margin: 10px 10px;" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee') %]">Aceptar</a></td>
+      </tr>
+</table>

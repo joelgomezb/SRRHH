@@ -1,0 +1,87 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET navbar = 'nomina' %]
+[% INCLUDE nomina/fuente_datos.tt2 %] 
+[% js_local = BLOCK %]
+
+$(document).ready(function(){
+
+  //Para la Fecha 
+  $(".fechajquery").datepicker({
+	dateFormat: 'yyyy-mm-dd',
+	changeMonth: true,
+	changeYear: true,
+	autoclose: true
+  });
+    
+  //ocultar el div con los períodos
+  $("div[name = per]").hide();
+  
+  //acciones en el caso de seleccionar el tipo de nomina
+  $("select[name = tipo_n]").change( function() { 
+    
+      var tipo = $("select[name = tipo_n]").val();
+        
+	  if ( tipo == 1 ) {
+		$("div[name = per]").hide();
+	  }
+	  else if ( tipo == 2 ) {
+		$("div[name = per]").show();
+	  }	  
+	  else {
+			$("div[name = per]").hide();
+	  }     
+  });  
+
+});
+
+[% END %]
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+
+<section class="content-header">
+  <h1>
+    RRHH
+    <small>Nómina</small>
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+	<li class="active">Administración</li>
+	<li class="active">Nómina</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<h1>SIGEFIRRHH</h1>
+<h3>GENERAR ARCHIVO AL BANCO</h3>
+
+[% form %]
+
+<p class="nota"> Es obligatorio seleccionar el grupo de nómina para generar el archivo <p>
+
+</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>

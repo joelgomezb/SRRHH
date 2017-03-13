@@ -1,0 +1,96 @@
+[% USE date %]
+[% MACRO number(n) GET n.chunk(-3).join('.') %]
+[%- USE Latex;
+    FILTER latex("pdf");-%]
+    \documentclass[12pt,spanish,letterpaper]{scrartcl}
+    \usepackage{ucs}
+    \usepackage{textcomp}
+    \usepackage[spanish]{babel}
+    \usepackage{ucs}
+    \usepackage{longtable}
+    \usepackage{verbatim}
+    \usepackage{graphicx}
+    \usepackage{fancyhdr}
+    \usepackage{grffile}
+    \usepackage{setspace}
+    \PassOptionsToPackage{normalem}{ulem}
+    \usepackage{ulem}
+    \usepackage{anysize}
+    \usepackage{array}
+    \usepackage{multirow}
+    \usepackage[table]{xcolor}
+    \usepackage{colortbl}
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+    \usepackage[spanish]{babel}
+
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+
+    \usepackage{blindtext}
+
+
+    \makeatletter
+
+    \providecommand{\tabularnewline}{\\}
+
+    \makeatother
+
+    \renewcommand*{\familydefault}{\sfdefault}
+    \renewcommand{\arraystretch}{0.5}
+
+    \pretolerance=10000
+    \tolerance=2000
+
+\begin{document}
+
+
+\includegraphics[ width=4.3cm,height=1.2cm]{[% Catalyst.path_to('root/static/images/') %]/AVP2.png}
+
+\vspace{0.5cm}
+
+
+\begin{center}
+\textbf{\Large \uline{Lista de Trabajadores al mes: [% mes %] [% 'del año:'| latex_encode %] [% anio %]}}
+
+
+\par\end{center}{\Large \par}
+
+[%- SET dependencia = '' %]
+[%- FOREACH fila IN valores %]
+  [%- IF loop.first %]
+\noindent \textbf{ \uline{[% fila.dependencia | latex_encode %]}}
+
+%%% ABRIR TABLA %%%
+{\footnotesize
+\begin{center}
+\begin{tabular}{|>{\centering}p{1.5cm}|>{\centering}p{7cm}|>{\centering}p{4cm}|>{\centering}p{3.8cm}|}
+  [%- END %]
+%%% CERRAR TABLA ANTERIOR %%%
+\end{tabular} %fin1
+\end{center}
+}
+
+    [% IF dependencia != fila.dependencia && ! loop.first %]
+\noindent \textbf{ \uline{[% fila.dependencia | latex_encode %]}}
+
+    [%- END %]
+%%% ABRIR TABLA %%%
+{\footnotesize
+\begin{center}
+
+\begin{tabular}{|>{\centering}p{1.5cm}|>{\centering}p{7cm}|>{\centering}p{4cm}|>{\centering}p{3.8cm}|}
+%%\rowcolor[gray]{.9} [% 'CEDULA' | latex_encode %] & [% 'TRABAJADOR' | latex_encode %] & [% 'CARGO' %] 
+%%% IMPRIMIR DETALLE FILA %%%
+[% number(fila.cedula) %] & [% fila.trabajador | latex_encode %] & [% fila.cargo %] & [% fila.tipopersonal %]
+  [%- SET dependencia = fila.dependencia %]
+  [%- IF loop.last %]
+%%% CERRAR ULTIMA TABLA %%%
+\end{tabular} %fin2
+\end{center}
+}
+  [%- END %]
+[%- END %]
+
+\end{document}
+
+[% END; -%]

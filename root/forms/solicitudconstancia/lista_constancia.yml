@@ -1,0 +1,64 @@
+languages: [es]
+method: post
+id: frm_lista_constancia
+enctype: multipart/form-data
+auto_constraint_class: "constraint_%t"
+indicator: submit
+elements:
+  - type: Fieldset
+    name: seleccionar_tipo_constancia
+    id: seleccionar_tipo_constancia
+    attributes:
+      class: principal
+    elements: 
+      - type: Select
+        name: formato_constancia
+        id: formato_constancia
+        attributes:
+          class: form-control
+          style: "width: 50%;"
+        label: Seleccione el formato de constancia de trabajo
+        empty_first: 1
+        empty_first_label: --SELECCIONE--
+        options:            
+          - [ '1', 'Constancia NO REMUNERADA OBRERO FIJO' ]
+          - [ '2', 'Constancia NO REMUNERADA OBRERO CONTRATADO' ]
+          - [ '3', 'Constancia NO REMUNERADA CONTRATADO' ]
+          - [ '4', 'Constancia NO REMUNERADA EMPLEADO FIJO' ] 
+          - [ '5', 'Constancia NO REMUNERADA COMISION DE SERVICIO Y/O ENCARGADURIA' ]
+          - [ '6', 'Constancia NO REMUNERADA ALTO NIVEL Y DE DIRECCION' ] 
+          - [ '7', 'Constancia NO REMUNERADA ALTOS FUNCIONARIOS DEL PODER PUBLICO' ]
+          - [ '8', 'Constancia NO REMUNERADA (ALTO NIVEL) COMISION DE SERVICIO Y/O ENCARGADURIA' ] 
+          - [ '9', 'Constancia MENSUAL REMUNERADA OBRERO FIJO' ]
+          - [ '10', 'Constancia MENSUAL REMUNERADA OBRERO CONTRATADO' ] 
+          - [ '11', 'Constancia MENSUAL REMUNERADA CONTRATADO' ]
+          - [ '12', 'Constancia MENSUAL REMUNERADA EMPLEADO FIJO' ] 
+          - [ '13', 'Constancia MENSUAL REMUNERADA COMISION DE SERVICIO Y/O ENCARGADURIA' ]
+          - [ '14', 'Constancia MENSUAL REMUNERADA ALTO NIVEL Y DE DIRECCION' ] 
+          - [ '15', 'Constancia MENSUAL REMUNERADA ALTOS FUNCIONARIOS DEL PODER PUBLICO' ]
+          - [ '16', 'Constancia MENSUAL REMUNERADA (ALTO NIVEL) COMISION DE SERVICIO Y/O ENCARGADURIA' ] 
+          - [ '17', 'Constancia ANUAL REMUNERADA OBRERO FIJO' ]
+          - [ '18', 'Constancia ANUAL REMUNERADA OBRERO CONTRATADO' ] 
+          - [ '19', 'Constancia ANUAL REMUNERADA CONTRATADO' ]
+          - [ '20', 'Constancia ANUAL REMUNERADA EMPLEADO FIJO' ] 
+          - [ '21', 'Constancia ANUAL REMUNERADA COMISION DE SERVICIO Y/O ENCARGADURIA' ]
+          - [ '22', 'Constancia ANUAL REMUNERADA ALTO NIVEL Y DE DIRECCION' ] 
+          - [ '23', 'Constancia ANUAL REMUNERADA ALTOS FUNCIONARIOS DEL PODER PUBLICO' ]
+          - [ '24', 'Constancia ANUAL REMUNERADA (ALTO NIVEL) COMISION DE SERVICIO Y/O ENCARGADURIA' ]  
+        constraints:
+          - type: Required
+            message: "Debe seleccionar un tipo de constancia"
+      - type: Submit
+        name: submit
+        attributes:
+          class: btn btn-primary
+          style: "margin: 10px; 20px;"
+        id: submit
+        value: DESCARGAR
+#       - type: Text
+#         name: tipo_constancia
+#         id: tipo_constancia
+#         label: Ingrese el código de la constancia                 
+#         constraints:
+#           - type: Required
+#             message: "Debe seleccionar un código"

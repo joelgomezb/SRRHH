@@ -1,0 +1,62 @@
+[% SET clase_tope = clase_tope || 'top_der' %]
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">NAVEGACION PRINCIPAL</li>
+	    [% IF navbar == 'quincenas' || navbar == 'especial' %]
+               <li class="active treeview">
+	    [% ELSE %]
+	        <li class="treeview">
+	    [% END %]
+              <a href="#">
+                <i class="fa fa-table"></i> <span>Recibos de Pago</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li [% IF navbar == 'quincenas' %]class="active"[% END %]><a href="[% Catalyst.uri_for('/quincenas/listar') %]"><i class="fa fa-circle-o"></i> Quincenal</a></li>
+                <li  [% IF navbar == 'especial' %]class="active"[% END %]><a href="[% Catalyst.uri_for('/bonificaciones/listar') %]"><i class="fa fa-circle-o"></i> Especial</a></li>
+              </ul>
+            </li>
+
+	    <li [% IF navbar == 'arc' %] class="active"[% END %]>
+		<a href="[% Catalyst.uri_for('/arc/') %]">
+			<i class="fa fa-bank"></i> Comprobante AR-C
+		</a>
+	    </li>
+
+	    <li [% IF navbar == 'constancia' %] class="active" [% END %]>
+		<a href="[% Catalyst.uri_for('/solicitudconstancia') %]">
+			<i class="fa fa-file-text-o"></i> Constancias de Trabajo
+		</a>
+	    </li>
+
+
+	[% IF Catalyst.user.administrador == 'S' %]
+	    [% IF navbar == 'alimentacion' || navbar == 'caja'  || navbar == 'fideicomiso' || navbar == 'nomina' || navbar == 'aportes' || navbar == 'listado' %]
+	            <li class="active treeview">
+	    [% ELSE %]
+        	    <li class="treeview">
+	    [% END %]
+
+              <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span>Administración</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+              <!--  <li [% IF navbar == 'alimentacion' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/alimentacion') %]"><i class="fa fa-circle-o"></i> Alimentación</a></li> -->
+              <!--  <li [% IF navbar == 'caja' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/') %]"><i class="fa fa-circle-o"></i> Caja de Ahorros</a></li> -->
+              <!--  <li [% IF navbar == 'fideicomiso' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee') %]"><i class="fa fa-circle-o"></i> Fideicomiso</a></li> -->
+              <!--  <li [% IF navbar == 'nomina' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/nomina/seleccionar_nomina_mppee') %]"><i class="fa fa-circle-o"></i> Nómina</a></li> -->
+                <li [% IF navbar == 'aportes' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/aportes') %]"><i class="fa fa-circle-o"></i> Aportes Patronales</a></li>
+                <li [% IF navbar == 'listado' %] class="active" [% END %]><a href="[% Catalyst.uri_for('/personal/listado') %]"><i class="fa fa-circle-o"></i> Lista Personal</a></li>
+              </ul>
+            </li>
+          </ul>
+	[% END %]
+        </section>
+        <!-- /.sidebar -->
+      </aside>

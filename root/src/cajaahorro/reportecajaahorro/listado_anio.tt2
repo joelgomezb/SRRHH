@@ -1,0 +1,28 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+
+<h2>Retenciones de Caja de Ahorro para el año [% anio %]</h2>
+
+[% IF registros %]
+
+  <table class="tablaresultados table table-hover" >
+    <tr> 
+        <th align="center">Año</th>
+        <th align="center">Mes</th>
+        <th align="center">Quincena</th>        
+        <th align="center">Monto Total</th> 
+        <th align="center">Resumen</th> 
+        <th align="center">&nbsp;</th> 
+    </tr>
+  [% FOREACH fila IN registros %]
+    <tr>
+        <td align="center"> [% fila.anio %]  </td>
+        <td align="center"> [% fila.mes %]  </td>
+        <td align="center"> [% fila.semana_quincena %] </td>        
+        <td align="right" > [% fila.get_column( 'total' ) | format_number %] </td>        
+        <td align="center"><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/resumen_cajaahorro/' _ fila.anio _'/'_ fila.mes _'/'_ fila.semana_quincena _'/' ) %]">Ver Resumen </a></td>
+        <td width="20%" align="center"><a href="[% Catalyst.uri_for('/cajaahorro/reportecajaahorro/generar_archivo/' _ fila.anio _'/'_ fila.mes _'/'_ fila.semana_quincena ) %]"> Generar Archivo </a></td>
+    </tr>
+  [% END %]
+  </table>
+
+[% END %]

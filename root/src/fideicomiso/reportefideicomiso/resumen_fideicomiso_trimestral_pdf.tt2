@@ -1,0 +1,91 @@
+[%- USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) -%]
+[%- USE date  #( format => '%d/%m/%Y') -%]
+[%- USE Latex;
+    FILTER latex("pdf");-%]
+
+\documentclass[english, letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{grffile}
+\usepackage{graphicx}
+\usepackage{anysize}
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+%\usepackage[spanish]{babel}
+\usepackage{babel}
+\marginsize{1cm}{1.5cm}{0.5cm}{1cm} 
+
+\begin{document}
+\pagestyle{fancy}
+
+\lhead{
+\includegraphics[ width=18.5cm,height=1.5cm]{[% Catalyst.path_to('root/static/images/') %]/cintillo_confidencial.png}
+}
+
+\begin{center}
+\textbf{\Large  }
+\end{center}
+
+\begin{center}
+\begin{longtable}{|c|c|l|r|r|r|}
+
+\multicolumn{6}{c}{ \textsf{\textbf{\large OFICINA DE LA DIRECCI\'ON GENERAL DE RECURSOS HUMANOS }} } \tabularnewline
+\multicolumn{6}{c}{ \textsf{\textbf{\normalsize FIDEICOMISO DEL PERSONAL [% tipopersonal %]  }} }\tabularnewline
+\multicolumn{6}{c}{ \textsf{\textbf{\ ACTIVO EN EL [% trimestre %] DE [% anio %]}} }\tabularnewline
+\multicolumn{6}{c}{  }\tabularnewline
+\hline
+\textsf{\textbf{\small N°}} & \textsf{\textbf{\small C\'edula}} & \textsf{\textbf{\small Nombre y Apellidos}} & \textsf{\textbf{\small Prestaciones(Bs)}} & \textsf{\textbf{\small Adicional(Bs)}} & \textsf{\textbf{\small Total (Bs)}} \tabularnewline
+\hline
+\hline
+\endfirsthead
+\hline
+\textsf{\textbf{\small N°}} & \textsf{\textbf{\small C\'edula}} & \textsf{\textbf{\small Nombre y Apellidos}} & \textsf{\textbf{\small Prestaciones(Bs)}} & \textsf{\textbf{\small Adicional(Bs)}} & \textsf{\textbf{\small Total (Bs)}} \tabularnewline
+\hline
+\hline
+\endhead
+\hline
+  [% cont = 1 %]
+  [% total = 0; %]
+  [% total_prestaciones = 0; %]
+  [% total_adicional = 0; %]
+	[% FOREACH fila IN datos %]
+      \textsf{\footnotesize [% cont %] } & \textsf{\footnotesize [% fila.cedula %] }  & \textsf{\footnotesize [% fila.nombre %] } & \textsf{\footnotesize [% fila.prestaciones | format_number %] } & \textsf{\footnotesize [% fila.adicional | format_number %] } & \textsf{\footnotesize [% fila.prestaciones + fila.adicional | format_number %] } \tabularnewline
+      [% cont = cont + 1 %]
+      [% total = total + fila.prestaciones + fila.adicional %]
+      [% total_prestaciones = total_prestaciones + fila.prestaciones  %]
+      [% total_adicional = total_adicional + fila.adicional %]
+      \hline    
+    [% END %]
+	
+\hline
+\textsf{\textbf{\small [% %] }} & \textsf{\textbf{\small Cantidad: [% cont - 1 %] }}  & \textsf{\textbf{\small [%  %] }}  & \textsf{\textbf{\small [% total_prestaciones | format_number %] }}  & \textsf{\textbf{\small [% total_adicional | format_number %] }}  & \textsf{\textbf{\small [%  total | format_number%] }} \tabularnewline
+\hline
+\end{longtable}
+
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\textsf{\textbf{ Elaborado por:}} & \textsf{\textbf{ Revisado por: }} & \textsf{\textbf{ Aprobado por:}} \tabularnewline
+\hline
+& & \tabularnewline
+& & \tabularnewline
+& & \tabularnewline
+& & \tabularnewline
+\hline
+ 
+\end{tabular}
+\end{center}
+
+\end{document}
+
+[% END; -%]

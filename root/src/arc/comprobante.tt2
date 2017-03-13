@@ -1,0 +1,113 @@
+[% USE date %]
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% MACRO number(n) GET n.chunk(-3).join('.') %]
+[%- USE Latex;
+    FILTER latex("pdf");-%]
+
+\documentclass[spanish]{article}
+\usepackage{courier}
+\renewcommand*\familydefault{\ttdefault} %% Only if the base font of the document is to be typewriter style
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage[portrait,letterpaper]{geometry}
+\geometry{verbose,tmargin=1cm,bmargin=1cm,lmargin=1cm,rmargin=1cm}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage{textcomp}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{tabular}{p{1cm} p{13.5cm} r}
+  \multirow{2}{*}{
+      \includegraphics[width=1cm]{[% Catalyst.path_to('root/static/images/') %]/59.png}
+  }
+  & 
+  REPÚBLICA BOLIVARIANA DE VENEZUELA
+  & 
+  {\footnotesize [% date.format(date.now, '%d/%m/%Y %I:%M %p') %] }
+  \tabularnewline
+  &
+  [% organismo.nombre_organismo %]
+  &
+  {\scriptsize SIGEFIRRHH }
+  \tabularnewline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{center}
+\Large PLANILLA AR-C
+\par\end{center}
+
+\vspace{0.25cm}
+
+\begin{center}
+PERIODO \quad{} 01/01/[% anio %] \quad{} AL \quad{} 31/12/[% anio %]
+\par\end{center}
+
+\def\arraystretch{1.5}%
+\begin{tabular}{p{1.5cm} p{2.5cm} p{10.4cm} p{5cm} }
+CÉDULA & [% datos_personales.cedula %] & [% datos_personales.ape_nom %] & RIF [% datos_personales.numero_rif %]
+\end{tabular}
+
+\def\arraystretch{1.5}%
+\begin{tabular}{p{4.5cm} p{10.5cm} r }
+\hline
+ORGANISMO & [% organismo.nombre_organismo %] & RIF [% organismo.rif %] \tabularnewline
+AGENTE DE RETENCIÓN & [% organismo.nombre_agente_retencion %] & CÉDULA [% organismo.cedula_agente_retencion %] \tabularnewline
+DIRECCIÓN & \multicolumn{2}{ p{14cm} }{ [% organismo.direccion %] } \tabularnewline
+\hline
+\end{tabular}
+
+\def\arraystretch{1.5}%
+\begin{tabular}{ p{2.9cm} >{\raggedleft}p{3cm} >{\centering}p{2cm} >{\raggedleft}p{3cm} >{\raggedleft}p{3cm} >{\raggedleft}p{3cm} }
+MES & DEVENGADO MENSUAL & \%ISLR & RETENCIÓN MENSUAL & ACUMULADO DEVENGADO & ACUMULADO RETENCIÓN \tabularnewline
+\hline
+[%- SET acumulado_devengado = 0 %]
+[%- SET acumulado_retencion = 0 %]
+[%- FOREACH mes IN detalles_arc %]
+  [%- SET acumulado_devengado = acumulado_devengado + mes.devengado %]
+  [%- SET acumulado_retencion = acumulado_retencion + mes.retencion %]
+  [% mes.nombre_mes %] & [% mes.devengado | format_number %] & [% mes.porcentaje_retencion | format_number %] & [% mes.retencion | format_number %] & [% acumulado_devengado | format_number %] & [% acumulado_retencion | format_number %] \tabularnewline
+[%- END %]
+\hline
+\end{tabular}
+
+\vspace{3cm}
+\def\arraystretch{1.5}%
+\begin{tabular}{ >{\centering}p{7cm} }
+[% SET firma = "/static/images/firma_" _ organismo.cedula_agente_retencion _ ".jpg" %]
+[% TRY %]
+  [% USE File(Catalyst.path_to('root',firma)) %]
+  \includegraphics[width=5cm]{[% Catalyst.path_to('root', firma) %]} \tabularnewline
+[% CATCH File %]
+  \vspace{3cm} \tabularnewline
+[% END %]
+\hline
+[% organismo.nombre_agente_retencion %] \tabularnewline
+[% organismo.cedula_agente_retencion  %]
+\end{tabular}
+
+\end{document}
+
+[% END; -%]

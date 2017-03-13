@@ -1,0 +1,6 @@
+<div class="acciones-secundarias">
+<a id="enlace_reporte_mensual" class="btn btn-primary" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee') %]"> Reportes Mensuales</a>
+<a id="enlace_reporte_trimestral" class="btn btn-primary" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_reporte_mppee_trimestral') %]"> Reportes Trimestrales</a>
+<a id="enlace_generar_archivo" class="btn btn-primary" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_datos_archivo') %]"> Generar Archivo txt</a>
+<a id="enlace_generar_archivo_tipopersonal" class="btn btn-primary" href="[% Catalyst.uri_for('/fideicomiso/reportefideicomiso/seleccionar_datos_archivo_tipopersonal') %]"> Generar Archivo txt Por Tipo de Personal</a>
+</div>

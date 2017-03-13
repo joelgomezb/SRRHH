@@ -1,0 +1,109 @@
+[% USE Number.Format( THOUSANDS_SEP => '.', DECIMAL_POINT => ',', DECIMAL_DIGITS => 2, DECIMAL_FILL => 1 ) %]
+[% SET navbar = 'quincenas' %]
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+[% IF  Catalyst.flash.error_msg %]
+<!-- error -->
+<div id="theme-error" class="alert-error" style="display: block;">
+    <div class="container">
+        <div class="col-xs-12">
+            <p style="color:white;"><i class="fa fa-exclamation"> </i>&nbsp; [%  Catalyst.flash.error_msg %]</p>
+        </div>
+    </div>
+</div>
+<!-- end error -->
+[% END %]
+
+
+<section class="content-header">
+  <h1>
+    Oficina de Gestión Humana
+  </h1>
+  <ol class="breadcrumb">
+	<li><a href="[% Catalyst.uri_for('/') %]"><i class="fa fa-home"></i> Home</a></li>
+    <li class="active">Recibos de Pago Quincenales</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-md-10">
+	<div class="box box-primary">
+		<div class="box-header with-border">
+                </div>
+
+<fieldset class="principal">
+  <legend>Datos Personales</legend>
+  <table class="table">
+    <tr>
+      <td class="nombrecampo">Apellidos y Nombres:</td>
+      <td>[% datos_personales.primer_nombre _ ' ' _ datos_personales.primer_apellido %]</td>
+      <td class="nombrecampo">Cédula:</td>
+      <td>[% datos_personales.cedula %]</td>
+      <td class="nombrecampo">Cargo Actual:</td>
+      <td>[% datos_personales.datos_personales.descripcion_cargo %]</td>
+    </tr>
+    <tr>
+      <td class="nombrecampo">Tipo de Personal:</td>
+      <td>[% datos_personales.datos_personales.nombre %]</td>
+      <td class="nombrecampo">Dependencia Actual:</td>
+      <td colspan="3">[% datos_personales.datos_personales.dependencia %]</td>
+    </tr>
+  </table>
+</fieldset>
+
+[% IF recibos.size %]
+
+<p class="estado_paginacion">Mostrando los registros del [% pager.first %] al [% pager.last %] de[% pager.total_entries %]</p>
+
+<table class="table table-hover">
+  <tr>
+    <th>Año</th>
+    <th>Mes</th>
+    <th>Quincena</th>
+    <th>Total Asignaciones</th>
+    <th>Total Deducciones</th>
+    <th>Neto</th>
+    <th>Detalle</th>
+  </tr>
+[% FOREACH recibo IN recibos %]
+  <tr>
+    <td>[% recibo.anio %]</td>
+    <td>[% recibo.mes %]</td>
+    <td>[% recibo.semana_quincena %]</td>
+    <td align="right">[% recibo.total_asignaciones | format_number %]</td>
+    <td align="right">[% recibo.total_deducciones | format_number %]</td>
+    <td align="right">[% recibo.total_asignaciones - recibo.total_deducciones | format_number%]</td>
+    <td><a target="_blank" href="[% Catalyst.uri_for('/quincenas/detalle/') _  recibo.cedula _ '/' _  recibo.anio _ '/' _  recibo.mes _ '/' _  recibo.semana_quincena _ '/' _ modelo %]">Detalle</a></td>
+  </tr>
+[% END %]
+</table>
+
+<div id="paginador">
+&lt;&lt;
+<a href="[% Catalyst.req.uri_with({ page => pager.first_page })
+%]">Primero</a>
+<a href="[% Catalyst.req.uri_with({ page => pager.previous_page
+})%]">Anterior</a>
+|
+<a href="[% Catalyst.req.uri_with({ page => pager.next_page
+})%]">Siguiente</a>
+<a href="[% Catalyst.req.uri_with({ page => pager.last_page })
+%]">Último</a>
+&gt;&gt;
+</div>
+
+[% ELSE %]
+<p class="nota">No hay Recibos de Pago Quincenales disponibles</p>
+[% END %]
+
+
+	</div>
+    </div><!-- ./col -->
+  </div><!-- /.tab-pane -->
+</div>
+</aside><!-- /.control-sidebar -->
+<div class="control-sidebar-bg"></div>
